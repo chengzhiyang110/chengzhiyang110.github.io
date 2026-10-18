@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>程志阳 · 软件工程 · 后端与 Web 开发</title>
+<meta name="description" content="程志阳的个人主页与在线简历。常州工学院软件工程专业，方向 Java 后端与 Web 全栈，独立开发微服务教务管理系统，参与 MES 工单与报表模块。">
+<meta name="keywords" content="程志阳,软件工程,Java,Spring Cloud,Vue,后端开发,常州工学院,个人简历">
+<meta name="author" content="程志阳">
+<meta property="og:title" content="程志阳 · 个人主页">
+<meta property="og:description" content="软件工程大四学生，专注 Java 后端与 Web 开发。">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#F6F8FC;
+    --card:#FFFFFF;
+    --text:#26323F;
+    --muted:#6B7A8F;
+    --primary:#4A90D9;
+    --primary-2:#5B8DEF;
+    --primary-soft:rgba(74,144,217,.10);
+    --line:rgba(38,50,63,.07);
+    --shadow:0 8px 30px rgba(74,144,217,.10);
+    --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--primary);text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  /* ---------- 顶部导航 ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;height:64px;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 clamp(20px,5vw,56px);
+    background:rgba(255,255,255,.78);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-brand{font-weight:800;font-size:17px;letter-spacing:.5px;color:var(--text);}
+  .nav-brand span{color:var(--primary);}
+  .nav-links{display:flex;gap:30px;list-style:none;}
+  .nav-links a{
+    position:relative;color:var(--muted);font-size:15px;font-weight:500;
+    padding:4px 0;transition:color .25s;
+  }
+  .nav-links a:hover,.nav-links a.active{color:var(--primary);}
+  .nav-links a.active::after{
+    content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    border-radius:2px;
+  }
+  .menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px;}
+  .menu-toggle span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
+
+  /* ---------- 首屏 ---------- */
+  .hero{
+    position:relative;min-height:100vh;padding:120px 24px 80px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;overflow:hidden;
+  }
+  .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;z-index:0;pointer-events:none;}
+  .blob-1{width:420px;height:420px;background:#D6E6FA;top:-80px;right:-80px;}
+  .blob-2{width:360px;height:360px;background:#E3EEFC;bottom:-60px;left:-80px;}
+  .hero-inner{position:relative;z-index:1;max-width:720px;display:flex;flex-direction:column;align-items:center;}
+  .avatar{
+    width:132px;height:132px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:52px;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,var(--primary),var(--primary-2));
+    border:5px solid #fff;box-shadow:0 12px 34px rgba(74,144,217,.28);
+    margin-bottom:26px;user-select:none;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--primary-soft);color:var(--primary);
+    font-size:13px;font-weight:600;padding:5px 14px;border-radius:999px;margin-bottom:18px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:#34C759;box-shadow:0 0 0 3px rgba(52,199,89,.18);}
+  .hero h1{
+    font-size:clamp(38px,7vw,60px);font-weight:800;letter-spacing:-1px;line-height:1.15;
+    margin-bottom:16px;
+  }
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--primary),var(--primary-2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .tagline{font-size:clamp(15px,2.4vw,19px);color:var(--muted);max-width:560px;margin-bottom:34px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 26px;border-radius:999px;font-size:15px;font-weight:600;
+    cursor:pointer;border:1px solid transparent;transition:.25s;
+  }
+  .btn-primary{
+    background:linear-gradient(120deg,var(--primary),var(--primary-2));color:#fff;
+    box-shadow:0 8px 22px rgba(74,144,217,.30);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(74,144,217,.38);}
+  .btn-ghost{background:#fff;color:var(--primary);border-color:rgba(74,144,217,.35);}
+  .btn-ghost:hover{background:var(--primary-soft);transform:translateY(-2px);}
+
+  /* ---------- 通用区块 ---------- */
+  section{scroll-margin-top:76px;}
+  .wrap{max-width:960px;margin:0 auto;padding:88px 24px;}
+  .sec-head{margin-bottom:40px;}
+  .sec-head .kicker{
+    font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    color:var(--primary);margin-bottom:8px;
+  }
+  .sec-head h2{font-size:clamp(26px,4vw,34px);font-weight:800;letter-spacing:-.5px;}
+  .sec-head p{color:var(--muted);margin-top:8px;}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:28px 30px;
+  }
+  .card p{color:#475569;}
+  .card p + p{margin-top:14px;}
+
+  /* ---------- 关于 ---------- */
+  .about-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:22px;align-items:start;}
+  .facts{display:flex;flex-direction:column;gap:14px;}
+  .fact{display:flex;align-items:flex-start;gap:12px;font-size:14.5px;}
+  .fact .ico{
+    flex:0 0 34px;width:34px;height:34px;border-radius:10px;background:var(--primary-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--primary);
+  }
+  .fact b{display:block;font-size:13px;color:var(--muted);font-weight:600;}
+  .fact span{color:var(--text);font-weight:600;}
+
+  /* ---------- 项目 ---------- */
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .project{position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+  .project:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(74,144,217,.18);}
+  .project-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .project h3{font-size:19px;font-weight:800;}
+  .project .role{
+    font-size:12px;font-weight:700;color:var(--primary);
+    background:var(--primary-soft);padding:3px 10px;border-radius:999px;
+  }
+  .project p{font-size:14.5px;color:#475569;margin-bottom:16px;}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tags span{
+    font-size:12.5px;font-weight:600;color:var(--primary);
+    background:var(--primary-soft);padding:4px 11px;border-radius:999px;
+  }
+
+  /* ---------- 技能 ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .skill-group h4{font-size:14px;font-weight:700;color:var(--muted);margin-bottom:12px;letter-spacing:.5px;}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;}
+  .chips span{
+    font-size:13.5px;font-weight:600;color:var(--text);
+    background:#fff;border:1px solid var(--line);box-shadow:0 2px 8px rgba(38,50,63,.04);
+    padding:7px 14px;border-radius:10px;
+  }
+
+  /* ---------- 时间线（教育 / 经历） ---------- */
+  .timeline{position:relative;padding-left:26px;}
+  .timeline::before{
+    content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--primary),rgba(74,144,217,.13));border-radius:2px;
+  }
+  .tl-item{position:relative;padding-bottom:26px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:"";position:absolute;left:-26px;top:6px;width:14px;height:14px;border-radius:50%;
+    background:#fff;border:3px solid var(--primary);box-shadow:0 0 0 4px rgba(74,144,217,.12);
+  }
+  .tl-item .when{font-size:12.5px;font-weight:700;color:var(--primary);letter-spacing:.5px;}
+  .tl-item h4{font-size:16.5px;font-weight:800;margin:3px 0 6px;}
+  .tl-item p{font-size:14.5px;color:#475569;}
+
+  /* ---------- 联系 ---------- */
+  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:30px;}
+  .contact-item{
+    background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;
+    display:flex;align-items:center;gap:14px;transition:.25s;
+  }
+  .contact-item:hover{border-color:rgba(74,144,217,.4);box-shadow:0 8px 24px rgba(74,144,217,.12);transform:translateY(-3px);}
+  .contact-item .ico{
+    flex:0 0 42px;width:42px;height:42px;border-radius:12px;
+    background:var(--primary-soft);color:var(--primary);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .contact-item b{display:block;font-size:12px;color:var(--muted);font-weight:600;}
+  .contact-item span{font-size:14.5px;font-weight:700;color:var(--text);word-break:break-all;}
+  .social-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .social-row .label{font-size:14px;color:var(--muted);font-weight:600;margin-right:4px;}
+  .social{
+    width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    transition:.25s;
+  }
+  .social:hover{color:#fff;background:linear-gradient(120deg,var(--primary),var(--primary-2));border-color:transparent;transform:translateY(-3px);box-shadow:0 10px 22px rgba(74,144,217,.30);}
+
+  /* ---------- 页脚 ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:30px 24px;text-align:center;color:var(--muted);font-size:13.5px;
+  }
+  footer .heart{color:var(--primary);}
+
+  /* ---------- 滚动淡入 ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.show{opacity:1;transform:none;}
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width:860px){
+    .about-grid{grid-template-columns:1fr;}
+    .projects{grid-template-columns:1fr;}
+  }
+  @media (max-width:768px){
+    .menu-toggle{display:flex;}
+    .nav-links{
+      position:fixed;top:64px;left:0;right:0;
+      flex-direction:column;gap:0;padding:8px 24px 16px;
+      background:rgba(255,255,255,.97);backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      transform:translateY(-140%);transition:transform .32s ease;
+      box-shadow:0 14px 30px rgba(38,50,63,.08);
+    }
+    .nav-links.open{transform:translateY(0);}
+    .nav-links a{display:block;padding:13px 2px;border-bottom:1px solid var(--line);}
+    .nav-links a.active::after{display:none;}
+    .wrap{padding:64px 20px;}
+    .hero{padding:110px 20px 70px;}
+    .skills-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .avatar{width:112px;height:112px;font-size:44px;}
+  }
+
+  /* ---------- 打印 / 导出 PDF ---------- */
+  @media print{
+    .nav,.menu-toggle,.hero-actions,.social-row,.blob{display:none !important;}
+    body{background:#fff;}
+    .hero{min-height:auto;padding:24px 0 10px;}
+    .wrap{padding:20px 0;}
+    .card,.contact-item{box-shadow:none;border-color:#e2e8f0;}
+    .reveal{opacity:1 !important;transform:none !important;}
+    section{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 导航 ============ -->
+<header class="nav">
+  <a href="#home" class="nav-brand">程志阳<span>.</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active">首页</a></li>
+    <li><a href="#about">关于我</a></li>
+    <li><a href="#projects">项目</a></li>
+    <li><a href="#skills">技能</a></li>
+    <li><a href="#contact">联系我</a></li>
+  </ul>
+  <button class="menu-toggle" id="menuToggle" aria-label="打开菜单">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ============ 首屏 ============ -->
+<section class="hero" id="home">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-inner">
+    <!-- 头像：想换成真人照片，把下面这行 div.avatar 换成
+         <img class="avatar" src="你的照片.jpg" alt="程志阳"> 即可 -->
+    <div class="avatar">程</div>
+    <div class="badge"><span class="dot"></span>正在寻找后端 / Web 开发机会</div>
+    <h1>嗨，我是<em>程志阳</em></h1>
+    <p class="tagline">软件工程大四学生，专注 Java 后端与 Web 开发。喜欢把复杂的问题拆开、一层层排查，直到它跑通。</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">看看我的项目 →</a>
+      <a href="#contact" class="btn btn-ghost">联系我</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 关于我 ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">About Me</div>
+      <h2>关于我</h2>
+      <p>一个踏实做事、习惯自己解决问题的开发者。</p>
+    </div>
+    <div class="about-grid">
+      <div class="card reveal">
+        <p>我是常州工学院软件工程专业的大四学生，方向是 Java 后端与 Web 全栈开发。</p>
+        <p>在校期间，我独立开发了一套微服务架构的<strong>教务管理系统</strong>——从零搭建 7 个服务，前端 Vue 2、后端 Spring Cloud，已在校内真实教学场景中使用；也参与过 <strong>MES 制造执行系统</strong>的工单与报表模块。</p>
+        <p>我喜欢把问题一层层拆开、排查到根本原因。这种习惯也让我在做宿舍管理员、带队运动会方阵时受益——做事认真、对人靠谱。我学东西快，期待能在一个真实的产品团队里继续成长。</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <div class="ico">🎓</div>
+          <div><b>教育背景</b><span>常州工学院 · 软件工程 · 本科</span></div>
+        </div>
+        <div class="fact">
+          <div class="ico">💻</div>
+          <div><b>方向</b><span>Java 后端 / Web 全栈</span></div>
+        </div>
+        <div class="fact">
+          <div class="ico">📍</div>
+          <div><b>所在城市</b><span>江苏 · 常州</span></div>
+        </div>
+        <div class="fact">
+          <div class="ico">🚀</div>
+          <div><b>求职意向</b><span>后端开发 / 网站建设</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 项目 ============ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Projects</div>
+      <h2>项目经历</h2>
+      <p>两个完整的 Web 项目，从架构到联调都亲自走过。</p>
+    </div>
+    <div class="projects">
+      <article class="card project reveal">
+        <div class="project-top">
+          <h3>教务管理系统</h3>
+          <span class="role">独立开发</span>
+        </div>
+        <p>从零搭建 7 个微服务，覆盖学生、教师、课程、成绩等模块；前端 Vue 2，后端 Spring Cloud，使用 Nacos 做注册与配置中心、Redis 做缓存、MySQL 持久化，已在校内真实教学场景中使用。</p>
+        <div class="tags">
+          <span>Java</span><span>Spring Cloud</span><span>Vue 2</span>
+          <span>MySQL</span><span>Nacos</span><span>Redis</span>
+        </div>
+      </article>
+      <article class="card project reveal">
+        <div class="project-top">
+          <h3>MES 制造执行系统</h3>
+          <span class="role">参与开发</span>
+        </div>
+        <p>参与工单管理与报表模块的开发与前后端联调，负责数据查询与展示逻辑，配合团队完成模块上线，熟悉了制造业务的数据流转与报表呈现。</p>
+        <div class="tags">
+          <span>Java</span><span>Spring Boot</span><span>Vue</span><span>MySQL</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 技能 ============ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Skills</div>
+      <h2>技能栈</h2>
+      <p>够用、能落地，也在持续补。</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <h4>后端</h4>
+        <div class="chips"><span>Java</span><span>Spring Boot</span><span>Spring Cloud</span><span>MyBatis</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>数据库 &amp; 中间件</h4>
+        <div class="chips"><span>MySQL</span><span>Redis</span><span>Nacos</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>前端</h4>
+        <div class="chips"><span>Vue 2</span><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>工具</h4>
+        <div class="chips"><span>Git</span><span>Maven</span><span>IDEA</span><span>Linux 基础</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 教育与经历 ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Education &amp; Experience</div>
+      <h2>教育与经历</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="when">2023.09 — 2027.06</div>
+        <h4>常州工学院 · 软件工程（本科）</h4>
+        <p>主修数据结构、数据库原理、计算机网络、软件工程、Java 程序设计等课程，边上课边做真实的课程项目。</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="when">校园经历</div>
+        <h4>宿舍管理员</h4>
+        <p>负责楼栋日常管理与安全核查，月均核查约 5000 人次，做到零安全隐患。</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="when">校园经历</div>
+        <h4>运动会方阵负责人</h4>
+        <p>带领 60+ 人方阵训练与现场组织，负责扫码签到签退，保障整个流程顺畅。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 联系 ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Contact</div>
+      <h2>联系我</h2>
+      <p>欢迎聊聊后端、Web 开发，或者一个实习机会。</p>
+    </div>
+    <div class="contact-grid reveal">
+      <a class="contact-item" href="tel:19802508290">
+        <div class="ico">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 2A1.5 1.5 0 002 3.5v1C2 9.6 6.4 14 11.5 14h1A1.5 1.5 0 0014 12.5v-1a1 1 0 00-.7-.96l-2.4-.8a1 1 0 00-1.05.34l-.6.8A8.5 8.5 0 015.1 6.75l.8-.6a1 1 0 00.35-1.05l-.8-2.4A1 1 0 004.5 2h-1z"/></svg>
+        </div>
+        <div><b>手机</b><span>198 0250 8290</span></div>
+      </a>
+      <a class="contact-item" href="mailto:your@email.com">
+        <div class="ico">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 3h13a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-13a.5.5 0 01-.5-.5v-9A.5.5 0 011.5 3zm.9 1L8 8.2 13.6 4H2.4zM2 5.4V12h12V5.4L8.4 9a.7.7 0 01-.8 0L2 5.4z"/></svg>
+        </div>
+        <div><b>邮箱</b><span>your@email.com</span></div>
+      </a>
+      <div class="contact-item">
+        <div class="ico">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a5 5 0 00-5 5c0 3.4 4.3 8.4 4.6 8.7a.6.6 0 00.8 0C8.7 14.4 13 9.4 13 6a5 5 0 00-5-5zm0 6.7A1.7 1.7 0 118 4.3a1.7 1.7 0 010 3.4z"/></svg>
+        </div>
+        <div><b>城市</b><span>江苏 · 常州</span></div>
+      </div>
+    </div>
+
+    <div class="social-row reveal">
+      <span class="label">找到我：</span>
+      <!-- 把 href 换成你自己的主页地址即可 -->
+      <a class="social" href="https://github.com/chengzhiyang110" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+      <a class="social" href="mailto:your@email.com" title="邮箱" aria-label="邮箱">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 3h13a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-13a.5.5 0 01-.5-.5v-9A.5.5 0 011.5 3zm.9 1L8 8.2 13.6 4H2.4zM2 5.4V12h12V5.4L8.4 9a.7.7 0 01-.8 0L2 5.4z"/></svg>
+      </a>
+      <a class="social" href="tel:19802508290" title="电话" aria-label="电话">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 2A1.5 1.5 0 002 3.5v1C2 9.6 6.4 14 11.5 14h1A1.5 1.5 0 0014 12.5v-1a1 1 0 00-.7-.96l-2.4-.8a1 1 0 00-1.05.34l-.6.8A8.5 8.5 0 015.1 6.75l.8-.6a1 1 0 00.35-1.05l-.8-2.4A1 1 0 004.5 2h-1z"/></svg>
+      </a>
+      <!-- 想加微信 / 掘金 / CSDN，复制一个 <a class="social"> 改 href 和图标即可 -->
+    </div>
+
+    <div style="margin-top:34px;" class="reveal">
+      <button class="btn btn-primary" onclick="window.print()">🖨️ 导出 / 打印为 PDF</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 程志阳 · 用 <span class="heart">♥</span> 与 HTML 手写而成
+</footer>
+
+<script>
+  // 移动端菜单
+  const toggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navLinks.classList.remove('open'))
+  );
+
+  // 滚动淡入
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // 导航高亮
+  const sections = [...document.querySelectorAll('section[id]')];
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const onScroll = () => {
+    let current = sections[0]?.id;
+    for (const s of sections) {
+      if (window.scrollY >= s.offsetTop - 140) current = s.id;
+    }
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+</body>
+</html>
