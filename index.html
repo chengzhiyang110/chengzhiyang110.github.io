@@ -144,6 +144,8 @@
     font-size:14px;font-weight:700;color:var(--primary);transition:gap .25s;
   }
   .project:hover .project-link{gap:11px;}
+  .project.wide{grid-column:1 / -1;display:grid;grid-template-columns:1.45fr 1fr;gap:28px;align-items:center;}
+  .project.wide img{width:100%;border-radius:12px;border:1px solid var(--line);}
   .project-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
   .project h3{font-size:19px;font-weight:800;}
   .project .role{
@@ -221,6 +223,7 @@
   @media (max-width:860px){
     .about-grid{grid-template-columns:1fr;}
     .projects{grid-template-columns:1fr;}
+    .project.wide{grid-template-columns:1fr;}
   }
   @media (max-width:768px){
     .menu-toggle{display:flex;}
@@ -331,7 +334,7 @@
     <div class="sec-head reveal">
       <div class="kicker">Projects</div>
       <h2>项目经历</h2>
-      <p>两个完整的 Web 项目，从架构到联调都亲自走过。</p>
+      <p>两套系统、一件竞赛作品，从架构到联调都亲自走过。</p>
     </div>
     <div class="projects">
       <a class="card project reveal" href="project-jiaowu.html">
@@ -356,6 +359,20 @@
           <span>Java</span><span>Spring Boot</span><span>Vue</span><span>MySQL</span>
         </div>
         <span class="project-link">查看项目详情 →</span>
+      </a>
+      <a class="card project reveal wide" href="project-shijing.html">
+        <div>
+          <div class="project-top">
+            <h3>诗境江南</h3>
+            <span class="role">竞赛作品 · 组长</span>
+          </div>
+          <p>输入一首诗，系统解析意象、推导情感与时节，用 Canvas 实时绘制一幅水墨意境图。自建 156 条意象—意境映射库，程序化生成宣纸、皴法与烟云，同诗同画、可复现。2026 年全国大学生数字媒体科技作品及创意竞赛参赛作品。</p>
+          <div class="tags">
+            <span>Spring Boot 3</span><span>Vue 3</span><span>Canvas 2D</span><span>ECharts</span><span>知识图谱</span>
+          </div>
+          <span class="project-link">查看作品详情 →</span>
+        </div>
+        <img src="shijing-fengqiao.jpg" alt="诗境江南根据《枫桥夜泊》生成的水墨意境图" loading="lazy">
       </a>
     </div>
   </div>
@@ -402,6 +419,11 @@
         <div class="when">2023.09 — 2027.06</div>
         <h4>常州工学院 · 软件工程（本科）</h4>
         <p>主修数据结构、数据库原理、计算机网络、软件工程、Java 程序设计等课程，边上课边做真实的课程项目。</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="when">2026.10</div>
+        <h4>全国大学生数字媒体科技作品及创意竞赛 · 组长</h4>
+        <p>作品「诗境江南」——古诗词意境可视化的数字文化体验平台。担任组长，负责整体架构、意象引擎算法与前端开发。</p>
       </div>
       <div class="tl-item reveal">
         <div class="when">校园经历</div>
