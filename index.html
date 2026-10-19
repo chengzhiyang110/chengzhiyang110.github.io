@@ -138,6 +138,12 @@
   .projects{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
   .project{position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
   .project:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(74,144,217,.18);}
+  a.project{display:block;color:inherit;text-decoration:none;}
+  .project-link{
+    display:inline-flex;align-items:center;gap:6px;margin-top:16px;
+    font-size:14px;font-weight:700;color:var(--primary);transition:gap .25s;
+  }
+  .project:hover .project-link{gap:11px;}
   .project-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
   .project h3{font-size:19px;font-weight:800;}
   .project .role{
@@ -328,7 +334,7 @@
       <p>两个完整的 Web 项目，从架构到联调都亲自走过。</p>
     </div>
     <div class="projects">
-      <article class="card project reveal">
+      <a class="card project reveal" href="project-jiaowu.html">
         <div class="project-top">
           <h3>教务管理系统</h3>
           <span class="role">独立开发</span>
@@ -338,17 +344,19 @@
           <span>Java</span><span>Spring Cloud</span><span>Vue 2</span>
           <span>MySQL</span><span>Nacos</span><span>Redis</span>
         </div>
-      </article>
-      <article class="card project reveal">
+        <span class="project-link">查看项目详情 →</span>
+      </a>
+      <a class="card project reveal" href="project-mes.html">
         <div class="project-top">
           <h3>MES 制造执行系统</h3>
-          <span class="role">参与开发</span>
+          <span class="role">组长 · 工单报表</span>
         </div>
-        <p>参与工单管理与报表模块的开发与前后端联调，负责数据查询与展示逻辑，配合团队完成模块上线，熟悉了制造业务的数据流转与报表呈现。</p>
+        <p>带 4 人团队开发，负责工单管理与报表模块的设计与前后端联调，统一接口约定、推进进度与代码合并，熟悉了制造业务的数据流转与报表呈现。</p>
         <div class="tags">
           <span>Java</span><span>Spring Boot</span><span>Vue</span><span>MySQL</span>
         </div>
-      </article>
+        <span class="project-link">查看项目详情 →</span>
+      </a>
     </div>
   </div>
 </section>
