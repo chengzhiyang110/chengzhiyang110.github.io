@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教务管理系统 · 程志阳</title>
+<meta name="description" content="程志阳独立开发的微服务教务管理系统：7 个服务、Vue 2 + Spring Cloud + Nacos + Redis + MySQL，已在校内真实教学场景使用。">
+<meta name="keywords" content="教务管理系统,微服务,Spring Cloud,Vue,课程设计,程志阳">
+<style>
+  :root{
+    --bg:#F6F8FC; --card:#FFFFFF; --text:#26323F; --muted:#6B7A8F;
+    --primary:#4A90D9; --primary-2:#5B8DEF;
+    --soft:rgba(74,144,217,.10); --line:rgba(38,50,63,.07);
+    --shadow:0 8px 30px rgba(74,144,217,.10); --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.75;-webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--primary);text-decoration:none;}
+  .nav{
+    position:sticky;top:0;z-index:100;height:64px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 clamp(20px,5vw,56px);
+    background:rgba(255,255,255,.82);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-brand{font-weight:800;font-size:17px;color:var(--text);}
+  .nav-brand span{color:var(--primary);}
+  .back{font-size:14.5px;font-weight:600;color:var(--muted);}
+  .back:hover{color:var(--primary);}
+
+  .hero{
+    position:relative;padding:72px 24px 56px;text-align:center;overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+    background:#DCEAFB;filter:blur(80px);opacity:.7;top:-220px;right:-120px;z-index:0;
+  }
+  .hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;background:var(--soft);color:var(--primary);
+    font-size:13px;font-weight:700;padding:5px 14px;border-radius:999px;margin-bottom:18px;
+  }
+  .hero h1{font-size:clamp(32px,6vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.2;}
+  .hero .lead{color:var(--muted);font-size:clamp(15px,2.2vw,17.5px);max-width:620px;margin:16px auto 24px;}
+  .tags{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;}
+  .tags span{
+    font-size:13px;font-weight:600;color:var(--primary);
+    background:#fff;border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  }
+
+  .wrap{max-width:900px;margin:0 auto;padding:10px 24px 88px;}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 0 52px;}
+  .stat{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:24px 18px;text-align:center;
+  }
+  .stat b{display:block;font-size:30px;font-weight:800;background:linear-gradient(120deg,var(--primary),var(--primary-2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat span{font-size:13.5px;color:var(--muted);font-weight:600;}
+
+  h2{
+    font-size:22px;font-weight:800;letter-spacing:-.3px;margin:52px 0 16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  h2::before{content:"";width:4px;height:20px;border-radius:2px;background:linear-gradient(180deg,var(--primary),var(--primary-2));}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:26px 28px;
+  }
+  .card p{color:#475569;font-size:15px;}
+  .card p + p{margin-top:12px;}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .card li{position:relative;padding-left:22px;color:#475569;font-size:15px;}
+  .card li::before{
+    content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;
+    background:linear-gradient(120deg,var(--primary),var(--primary-2));
+  }
+  .card li b{color:var(--text);font-weight:700;}
+
+  /* 架构图 */
+  .arch{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:30px 22px;
+  }
+  .arch-layer{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+  .arch-node{
+    background:linear-gradient(135deg,#EDF4FD,#F7FAFF);border:1px solid rgba(74,144,217,.22);
+    color:#2E6BA8;font-size:13.5px;font-weight:700;padding:11px 18px;border-radius:11px;
+    text-align:center;min-width:104px;
+  }
+  .arch-node.hl{
+    background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-color:transparent;
+    box-shadow:0 8px 20px rgba(74,144,217,.28);
+  }
+  .arch-node small{display:block;font-size:11.5px;font-weight:600;opacity:.75;margin-top:2px;}
+  .arch-arrow{text-align:center;color:#A9BCD0;font-size:18px;line-height:1;margin:12px 0;}
+  .arch-mid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 auto;max-width:640px;
+  }
+  .arch-mid .arch-node{min-width:0;padding:10px 8px;font-size:12.5px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .feat{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:22px 24px;
+  }
+  .feat h3{font-size:16px;font-weight:800;margin-bottom:8px;}
+  .feat p{font-size:14px;color:#5A6B80;}
+
+  .foot{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:56px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:999px;
+    font-size:15px;font-weight:600;border:1px solid rgba(74,144,217,.35);color:var(--primary);
+    background:#fff;transition:.25s;
+  }
+  .btn:hover{background:var(--soft);transform:translateY(-2px);}
+  .btn-primary{
+    background:linear-gradient(120deg,var(--primary),var(--primary-2));color:#fff;border-color:transparent;
+    box-shadow:0 8px 22px rgba(74,144,217,.30);
+  }
+  .btn-primary:hover{box-shadow:0 12px 28px rgba(74,144,217,.38);}
+
+  footer{border-top:1px solid var(--line);padding:28px 24px;text-align:center;color:var(--muted);font-size:13.5px;}
+
+  @media (max-width:768px){
+    .stats{grid-template-columns:1fr;gap:12px;}
+    .grid2{grid-template-columns:1fr;}
+    .arch-mid{grid-template-columns:1fr 1fr;}
+    .hero{padding:52px 20px 40px;}
+    .wrap{padding:0 18px 64px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="index.html" class="nav-brand">程志阳<span>.</span></a>
+  <a href="index.html#projects" class="back">← 返回项目列表</a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge">独立开发 · 已上线使用</div>
+    <h1>教务管理系统</h1>
+    <p class="lead">从零搭建的 7 服务微服务教务平台，覆盖学生、教师、课程、成绩全流程，目前已在校内真实教学场景中使用。</p>
+    <div class="tags">
+      <span>Java</span><span>Spring Cloud</span><span>Spring Boot</span><span>Vue 2</span>
+      <span>MySQL</span><span>Nacos</span><span>Redis</span><span>JWT</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <div class="stats">
+    <div class="stat"><b>7</b><span>个微服务</span></div>
+    <div class="stat"><b>1</b><span>人独立完成</span></div>
+    <div class="stat"><b>校内</b><span>真实教学使用</span></div>
+  </div>
+
+  <h2>项目背景</h2>
+  <div class="card">
+    <p>学校的教务操作原本分散在 Excel 表格和多个独立系统里：学生信息在表格中维护，成绩录入靠邮件传递，课程调整需要人工同步。数据不一致、查询慢、权限混乱是常态。</p>
+    <p>我的目标是把这些分散的流程收进一套统一系统：一个入口登录，不同角色看到不同功能，数据只存一份。</p>
+  </div>
+
+  <h2>我的职责</h2>
+  <div class="card">
+    <ul>
+      <li><b>从零设计整体架构</b>：按业务边界拆分服务，确定网关、认证、业务服务的职责范围。</li>
+      <li><b>独立完成后端开发</b>：7 个服务全部由我编写，包括接口设计、业务逻辑、数据库表结构。</li>
+      <li><b>搭建基础设施</b>：用 Nacos 做服务注册与配置中心，Redis 做热点数据缓存，网关统一转发与鉴权。</li>
+      <li><b>前后端联调与部署</b>：对接 Vue 2 前端，处理跨域、Token 传递、接口调试等实际问题。</li>
+    </ul>
+  </div>
+
+  <h2>技术架构</h2>
+  <div class="arch">
+    <div class="arch-layer">
+      <div class="arch-node hl">Vue 2 前端<small>页面与交互</small></div>
+    </div>
+    <div class="arch-arrow">↓</div>
+    <div class="arch-layer">
+      <div class="arch-node hl">edu-gateway<small>统一入口 · 路由 · 鉴权</small></div>
+    </div>
+    <div class="arch-arrow">↓</div>
+    <div class="arch-mid">
+      <div class="arch-node">认证服务<small>JWT 签发</small></div>
+      <div class="arch-node">学生服务<small>信息管理</small></div>
+      <div class="arch-node">课程服务<small>排课选课</small></div>
+      <div class="arch-node">成绩服务<small>录入查询</small></div>
+    </div>
+    <div class="arch-arrow">↓</div>
+    <div class="arch-layer">
+      <div class="arch-node">Nacos<small>注册 · 配置</small></div>
+      <div class="arch-node">Redis<small>缓存</small></div>
+      <div class="arch-node">MySQL<small>持久化</small></div>
+    </div>
+  </div>
+
+  <h2>核心模块</h2>
+  <div class="grid2">
+    <div class="feat">
+      <h3>统一认证</h3>
+      <p>JWT 无状态登录，网关统一校验 Token，学生、教师、管理员三种角色对应不同权限。</p>
+    </div>
+    <div class="feat">
+      <h3>学生与教师管理</h3>
+      <p>基础信息的增删改查、分页检索、批量导入，数据统一入库，不再依赖 Excel。</p>
+    </div>
+    <div class="feat">
+      <h3>课程与成绩</h3>
+      <p>课程信息维护、成绩录入与查询，按学期和班级维度过滤，支持导出。</p>
+    </div>
+    <div class="feat">
+      <h3>服务治理</h3>
+      <p>Nacos 统一注册与配置，网关做路由转发和负载均衡，单个服务可独立启动调试。</p>
+    </div>
+  </div>
+
+  <h2>技术要点</h2>
+  <div class="card">
+    <ul>
+      <li><b>服务拆分</b>：按业务域拆成独立服务，每个服务独立数据库连接、独立启动，避免单体应用一改全动。</li>
+      <li><b>无状态认证</b>：JWT 携带用户身份和角色，网关统一验签，业务服务不重复实现登录逻辑。</li>
+      <li><b>缓存策略</b>：课程、字典这类读多写少的数据放 Redis，减少数据库压力。</li>
+      <li><b>配置集中管理</b>：Nacos 统一管理各服务配置，改配置不用逐个改文件重启。</li>
+    </ul>
+  </div>
+
+  <h2>项目成果</h2>
+  <div class="card">
+    <p>系统已在校内真实教学场景中运行，覆盖学生信息、课程、成绩等日常教务操作。这个项目让我完整走过了架构设计、编码、联调、部署和问题排查的全流程。</p>
+    <p style="color:var(--muted);font-size:14px;margin-top:14px;">源码为私有仓库，面试时可现场演示运行效果与代码结构。</p>
+  </div>
+
+  <div class="foot">
+    <a href="index.html#projects" class="btn">← 返回项目列表</a>
+    <a href="index.html#contact" class="btn btn-primary">联系我</a>
+  </div>
+
+</div>
+
+<footer>© 2026 程志阳 · 用 HTML 手写而成</footer>
+
+</body>
+</html>
